@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "krkn-service-hijacking"
+version = "0.1.0"
+description = ""
+authors = ["Tullio Sebastiani <tsebastiani@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "app.py", from="./"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+flask = "^2.3.2"
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
