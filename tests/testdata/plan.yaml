@@ -1,0 +1,32 @@
+- route: "/list"
+  steps:
+    GET:
+      - durations: 20
+        status: 500
+        mime_type: "application/json"
+        payload: |
+          {
+            "status":"something"
+          }
+      - duration: 60
+        status: 201
+        mime_type: "application/json"
+        payload: |
+          {
+            "status":"something different"
+          }
+    POST:
+      - duration: 30
+        status: 401
+        mime_type: "application/json"
+        payload:
+
+- route: "/create"
+  steps:
+    POST:
+      - duration: 30
+        status: 401
+        payload: |
+          {
+            "status":"something else"
+          }
