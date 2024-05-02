@@ -7,11 +7,18 @@ import yaml
 from flask import Flask, request, Response, jsonify
 
 from models import HttpRequest, Resource
-from utils import validate_step
+from utils import validate_step, TimeKeeper
 
 app = Flask(__name__)
+logging.error("*************************INSTANCE")
 method_steps: dict[(str, str), list[dict[any]]] = dict[(str, str), list[dict[any]]]()
-start_time = time.time()
+time_keeper = TimeKeeper()
+
+
+def restart_time():
+    start_time = time.time()
+
+
 stats: list[Resource] = list[Resource]()
 test_plan_path = os.environ.get("TEST_PLAN_PATH")
 stats_endpoint = (
@@ -20,6 +27,7 @@ stats_endpoint = (
 
 
 def request_handler(params: str = None):
+
     path = request.path if not params else request.path.replace(f"/{params}", "")
     steps = method_steps[(request.method, path)]
 
@@ -32,7 +40,7 @@ def request_handler(params: str = None):
                 status=500,
             )
 
-        if time.time() - start_time <= request_step["duration"]:
+        if time.time() - time_keeper.start_time <= request_step["duration"]:
             __add_stat_row(
                 path=path,
                 response_body=request_step["payload"],
@@ -41,7 +49,11 @@ def request_handler(params: str = None):
                 request_method=request.method,
                 request_full_path=request.full_path,
             )
-            return Response(request_step["payload"], request_step["status"])
+            return Response(
+                request_step["payload"],
+                request_step["status"],
+                mimetype=request_step["mime_type"],
+            )
         # append stats
     __add_stat_row(
         path=path,
@@ -51,7 +63,9 @@ def request_handler(params: str = None):
         request_method=request.method,
         request_full_path=request.full_path,
     )
-    return Response(steps[-1]["payload"], steps[-1]["status"])
+    return Response(
+        steps[-1]["payload"], steps[-1]["status"], mimetype=steps[-1]["mime_type"]
+    )
 
 
 def get_stats():
@@ -96,6 +110,7 @@ with open(test_plan_path) as stream:
     test_plan = yaml.safe_load(stream)
 
 # map the stats endpoint
+
 app.add_url_rule(stats_endpoint, view_func=get_stats, methods=["GET"])
 
 for step in test_plan:
