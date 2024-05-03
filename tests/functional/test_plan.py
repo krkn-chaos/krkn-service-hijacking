@@ -1,5 +1,4 @@
 import json
-import os
 import time
 
 
@@ -70,12 +69,16 @@ def test_stats(app, client, time_keeper):
     post = [r for r in stats_json if r["method"] == "POST"][0]
     patch = [r for r in stats_json if r["method"] == "PATCH"][0]
 
-    get_stat = [r for r in get["requests"] if get_resource in r["request_full_path"]][0]
+    get_stat = [
+        r for r in get["requests"] if get_resource in r["request_full_path"]
+    ][0]
     post_stat = [
         r for r in post["requests"] if post_resource in r["request_full_path"]
     ][0]
     patch_stat = [
-        r for r in patch["requests"] if patch_resource in r["request_full_path"]
+        r
+        for r in patch["requests"]
+        if patch_resource in r["request_full_path"]
     ][0]
 
     assert get_stat["mime_type"] == "application/json"
