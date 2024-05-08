@@ -30,7 +30,10 @@ def request_handler(params: str = None):
     path = (
         request.path if not params else request.path.replace(f"/{params}", "")
     )
-    steps = method_steps[(request.method, path)]
+    if (request.method, path) in method_steps:
+        steps = method_steps[(request.method, path)]
+    else:
+        return Response(f"{request.method} on {path} not allowed", status=405)
 
     for request_step in steps:
         if validate_step(request_step):
