@@ -68,17 +68,17 @@ jobs:
         uses: actions/checkout@v3
       - name: Build Docker image
         run: |
-          docker build --no-cache -t quay.io/redhat-chaos/krkn-service-hijacking:latest .
-          docker tag quay.io/redhat-chaos/krkn-service-hijacking:latest quay.io/redhat-chaos/krkn-service-hijacking:${GITHUB_REF##*/}
+          docker build --no-cache -t quay.io/krkn-chaos/krkn-service-hijacking:latest .
+          docker tag quay.io/krkn-chaos/krkn-service-hijacking:latest quay.io/krkn-chaos/krkn-service-hijacking:${GITHUB_REF##*/}
       - name: Login in quay
         run: docker login quay.io -u ${QUAY_USER} -p ${QUAY_TOKEN}
         env:
-          QUAY_USER: ${{ secrets.RH_USERNAME }}
-          QUAY_TOKEN: ${{ secrets.RH_PASSWORD }}
+          QUAY_USER: ${{ secrets.QUAY_USERNAME }}
+          QUAY_TOKEN: ${{ secrets.QUAY_PASSWORD }}
       - name: Push Docker image
         run: |
-          docker push quay.io/redhat-chaos/krkn-service-hijacking:latest
-          docker push quay.io/redhat-chaos/krkn-service-hijacking:${GITHUB_REF##*/}
+          docker push quay.io/krkn-chaos/krkn-service-hijacking:latest
+          docker push quay.io/krkn-chaos/krkn-service-hijacking:${GITHUB_REF##*/}
           
 
 #  publish:
