@@ -62,7 +62,7 @@ def test_stats(app, client, time_keeper):
     client.post(post_resource)
     client.patch(patch_resource)
 
-    result = client.get("/stats")
+    result = client.get("/krkn-stats")
     stats_json = json.loads(result.get_data(as_text=True))
     assert len(stats_json) == 3
     get = [r for r in stats_json if r["method"] == "GET"][0]
