@@ -21,7 +21,7 @@ test_plan_path = os.environ.get("TEST_PLAN_PATH")
 stats_endpoint = (
     os.environ.get("STATS_ROUTE")
     if os.environ.get("STATS_ROUTE")
-    else "/stats"
+    else "/krkn-stats"
 )
 
 
