@@ -1,4 +1,6 @@
 # Service Hijacking Mock Webservice
+![coverage](https://krkn-chaos.github.io/krkn-lib-docs/coverage_badge_hijacking.svg)
+![action](https://github.com/krkn-chaos/krkn-service-hijacking/actions/workflows/test.yaml/badge.svg)
 
 This is the mock webservice used in the [Krkn](https://github.com/krkn-chaos/krkn) Service Hijacking
 scenario.
