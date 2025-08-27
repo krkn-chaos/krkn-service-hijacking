@@ -46,13 +46,13 @@ jobs:
         run: |
           poetry run html2text --ignore-images --ignore-links -b 0 htmlcov/index.html >> $GITHUB_STEP_SUMMARY
       - name: Upload json coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage.json
           path: coverage.json
           if-no-files-found: error
       - name: Upload coverage HTML artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: htmlcov
@@ -110,7 +110,7 @@ jobs:
             path: krkn-lib-docs
             ssh-key: ${{ secrets.KRKN_LIB_DOCS_PRIV_KEY }}
         - name: Download json coverage
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@v
           with:
             name: coverage.json
         - name: Set up Python
