@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Check isort, black, and flake8
@@ -46,13 +46,13 @@ jobs:
         run: |
           poetry run html2text --ignore-images --ignore-links -b 0 htmlcov/index.html >> $GITHUB_STEP_SUMMARY
       - name: Upload json coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3
         with:
           name: coverage.json
           path: coverage.json
           if-no-files-found: error
       - name: Upload coverage HTML artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3
         with:
           name: coverage
           path: htmlcov
@@ -65,7 +65,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
       - name: Build Docker image
         run: |
           docker build --no-cache -t quay.io/krkn-chaos/krkn-service-hijacking:latest .
@@ -87,17 +87,17 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
         - name: Check out doc repo
-          uses: actions/checkout@master
+          uses: actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
           with:
             repository: krkn-chaos/krkn-lib-docs
             path: krkn-lib-docs
             ssh-key: ${{ secrets.KRKN_LIB_DOCS_PRIV_KEY }}
         - name: Download json coverage
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
           with:
             name: coverage.json
         - name: Set up Python
-          uses: actions/setup-python@v4
+          uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
           with:
             python-version: 3.9
         - name: Copy badge on GitHub Page Repo
